@@ -1,11 +1,9 @@
 import org.junit.Ignore;
-import org.junit.experimental.runners.Enclosed;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -26,13 +24,18 @@ public class TestDemoqa {
     public void setUp() {
         drivers.add(new ChromeDriver());
         drivers.add(new FirefoxDriver());
-//        drivers.add(new EdgeDriver());
     }
 
     @AfterEach
     public void quit() {
         for (WebDriver driver : drivers) {
             driver.quit();
+        }
+    }
+
+    public void printMsg(String name) {
+        for (WebDriver driver : drivers) {
+            System.out.println("Test " + name + " passé avec " + driver.getClass().getSimpleName());
         }
     }
 
@@ -50,38 +53,33 @@ public class TestDemoqa {
 
             WebElement dbleClkMsg = driver.findElement(By.id("doubleClickMessage"));
             assertEquals("You have done a double click", dbleClkMsg.getText());
-
-            System.out.println("Test double click passé avec " + driver.getClass().getSimpleName());
         }
+        printMsg("de double click");
     }
 
     @Test
     public void it_shoud_right_click() throws InterruptedException {
         for (WebDriver driver : drivers) {
-
             driver.get("https://demoqa.com/buttons");
 
             Actions actions = new Actions(driver);
             WebElement btnRightClk = driver.findElement(By.id("rightClickBtn"));
 
             actions.contextClick(btnRightClk).perform();
-            Thread.sleep(500);
+            Thread.sleep(1500);
 
             WebElement btnRightMsg = driver.findElement(By.id("rightClickMessage"));
             assertEquals("You have done a right click", btnRightMsg.getText());
-
-            System.out.println("Test click droit passé avec " + driver.getClass().getSimpleName());
         }
 
+        printMsg("click droit");
     }
 
     @Ignore
     public void it_should_select_radio_yes() throws InterruptedException {
         for (WebDriver driver : drivers) {
-
             driver.get("https://demoqa.com/radio-button");
 
-//            WebElement yesBtnRadio = driver.findElement(By.id("yesRadio"));
             WebElement yesBtnRadio = driver.findElement(By.name("like"));
             yesBtnRadio.click();
 
@@ -92,10 +90,8 @@ public class TestDemoqa {
             assertEquals("Yes", msgSuccess.getText());
 
             driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
-
-            System.out.println("Test radio \"Yes\" passé avec " + driver.getClass().getSimpleName());
         }
-
+        printMsg("radio \"Yes\"");
     }
 
     @Test
@@ -145,8 +141,8 @@ public class TestDemoqa {
             }
 
             assertTrue(contentFound);
-            System.out.println("Test web table passé avec " + driver.getClass().getSimpleName());
         }
+        printMsg("web table");
     }
 
     @Ignore
@@ -181,6 +177,7 @@ public class TestDemoqa {
             assertEquals("User exists!", userExists.getText());
 
         }
+        printMsg("register");
     }
 
     @Test
@@ -208,10 +205,49 @@ public class TestDemoqa {
             // vérification de l'url de la page de profil
             String currentUrl = driver.getCurrentUrl();
             assertTrue(currentUrl.contains("profile"));
-            System.out.println("Test login passé avec " + driver.getClass().getSimpleName());
         }
+        printMsg("login");
     }
 
+    @Test
+    public void it_should_range() {
+        for (WebDriver driver : drivers
+        ) {
+            driver.get("https://demoqa.com/slider");
+
+            WebElement slideRange = driver.findElement(By.cssSelector(".range-slider"));
+            int initialValue = Integer.parseInt(slideRange.getAttribute("value"));
+
+            for (int i = 1; i <= 5; i++) {
+                slideRange.sendKeys(Keys.ARROW_RIGHT);
+            }
+
+            int updatedValue = Integer.parseInt(slideRange.getAttribute("value"));
+            assertEquals(initialValue + 5, updatedValue);
+        }
+        printMsg("range");
+    }
+
+    @Test
+    public void it_should_progress() throws InterruptedException {
+        for (WebDriver driver : drivers
+        ) {
+            driver.get("https://demoqa.com/progress-bar");
+
+            WebElement btnProgress = driver.findElement(By.id("startStopButton"));
+            btnProgress.click();
+            Thread.sleep(1500);
+            btnProgress.click();
+
+            WebElement progressBar = driver.findElement(By.cssSelector(".progress-bar"));
+
+            String progressValue = progressBar.getText();
+
+            assertEquals("15%", progressValue);
+            assertTrue(progressBar.isDisplayed());
+        }
+        printMsg("barre de progression");
+    }
 }
 
 
