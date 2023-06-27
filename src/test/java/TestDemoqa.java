@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -32,6 +33,45 @@ public class TestDemoqa {
         for (WebDriver driver : drivers) {
             driver.quit();
         }
+    }
+
+    @Test
+    public void it_shoud_double_click() throws InterruptedException {
+        for (WebDriver driver : drivers) {
+
+            driver.get("https://demoqa.com/buttons");
+
+            Actions actions = new Actions(driver);
+            WebElement btnDbleClk = driver.findElement(By.id("doubleClickBtn"));
+
+            actions.doubleClick(btnDbleClk).perform();
+            Thread.sleep(500);
+
+            WebElement dbleClkMsg = driver.findElement(By.id("doubleClickMessage"));
+            assertEquals("You have done a double click", dbleClkMsg.getText());
+
+            System.out.println("Test passé avec " + driver.getClass().getSimpleName());
+        }
+    }
+
+    @Test
+    public void it_shoud_right_click() throws InterruptedException {
+        for (WebDriver driver : drivers) {
+
+            driver.get("https://demoqa.com/buttons");
+
+            Actions actions = new Actions(driver);
+            WebElement btnRightClk = driver.findElement(By.id("rightClickBtn"));
+
+            actions.contextClick(btnRightClk).perform();
+            Thread.sleep(500);
+
+            WebElement btnRightMsg = driver.findElement(By.id("rightClickMessage"));
+            assertEquals("You have done a right click", btnRightMsg.getText());
+
+            System.out.println("Test passé avec " + driver.getClass().getSimpleName());
+        }
+
     }
 
     @Ignore
