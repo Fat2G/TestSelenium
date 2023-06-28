@@ -89,5 +89,42 @@ public class SwagLabsTest {
             assertEquals("1", articleNumber);
         }
     }
+    @Test
+    public void it_should_remove() throws InterruptedException {
+        for (WebDriver driver : drivers){
+            driver.get("https://www.saucedemo.com/inventory.html");
 
+            connect(driver);
+
+            WebElement addToCartBtn = driver.findElement(By.id("add-to-cart-sauce-labs-backpack"));
+            addToCartBtn.click();
+
+            Thread.sleep(500);
+
+            WebElement addToCartBtn2 = driver.findElement(By.id("add-to-cart-sauce-labs-bike-light"));
+            addToCartBtn2.click();
+
+            Thread.sleep(500);
+
+            WebElement addToCartBtn3 = driver.findElement(By.id("add-to-cart-sauce-labs-bolt-t-shirt"));
+            addToCartBtn3.click();
+
+            Thread.sleep(500);
+
+            WebElement removeBtn = driver.findElement(By.id("remove-sauce-labs-bike-light"));
+            removeBtn.click();
+
+            Thread.sleep(500);
+
+            WebElement removeBtn2 = driver.findElement(By.id("remove-sauce-labs-backpack"));
+            removeBtn2.click();
+
+            Thread.sleep(500);
+
+            String articleNumber = driver.findElement(By.className("shopping_cart_badge")).getText();
+
+            assertEquals("1",articleNumber);
+
+        }
+    }
 }
