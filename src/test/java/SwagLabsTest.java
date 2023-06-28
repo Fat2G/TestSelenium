@@ -39,10 +39,8 @@ public class SwagLabsTest {
         driver.findElement(By.id("password")).sendKeys(password);
 
         driver.findElement(By.id("login-button")).click();
-
-        System.out.println("URL APRES CONNECT AVANT SLEEP " + driver.getCurrentUrl());
         Thread.sleep(1500);
-        System.out.println("URL APRES CONNECT " + driver.getCurrentUrl());
+
 
     }
 
@@ -73,6 +71,23 @@ public class SwagLabsTest {
             assertEquals("https://www.saucedemo.com/", currentUrl);
         }
         printMsg("de logout");
+    }
+    @Test
+    public void it_should_add_basket() throws InterruptedException {
+        for(WebDriver driver : drivers) {
+            driver.get("https://www.saucedemo.com/inventory.html");
+
+            connect(driver);
+
+            WebElement addToCartBtn = driver.findElement(By.id("add-to-cart-sauce-labs-backpack"));
+            addToCartBtn.click();
+
+            Thread.sleep(500);
+
+            String articleNumber = driver.findElement(By.className("shopping_cart_badge")).getText();
+
+            assertEquals("1", articleNumber);
+        }
     }
 
 }
