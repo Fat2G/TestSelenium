@@ -133,6 +133,25 @@ public class TestParameterizedDemoQa {
 		System.out.println("Test passé avec " + driver.getClass().getSimpleName());
 	}
 	
+	@Test
+	public void it_should_progress () throws InterruptedException {
+		driver.get("https://demoqa.com/progress-bar");
+		
+		WebElement btnProgress = driver.findElement(By.id("startStopButton"));
+		WebElement progressBar = driver.findElement(By.cssSelector(".progress-bar"));
+		String     pbValueFmtd = progressBar.getText().split("%")[0];
+		int pbValueStart = progressBar.getText().equals("") ? 0 : Integer.parseInt(pbValueFmtd);
+		
+		btnProgress.click();
+		Thread.sleep(1500);
+		btnProgress.click();
+		
+		pbValueFmtd = progressBar.getText().split("%")[0];
+		int pbValueEnd = progressBar.getText().equals("") ? 0 : Integer.parseInt(pbValueFmtd);
+		
+		assertTrue(pbValueStart < pbValueEnd);
+		assertTrue(progressBar.isDisplayed());
+	}
 	
 	@Ignore
 	public void it_should_select_radio_yes () throws InterruptedException {
