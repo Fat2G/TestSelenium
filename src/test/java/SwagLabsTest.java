@@ -127,4 +127,29 @@ public class SwagLabsTest {
 
         }
     }
+
+    @Test
+    public void it_should_not_access_pages_if_not_logged() throws InterruptedException {
+        for(WebDriver driver : drivers) {
+            driver.get("https://www.saucedemo.com/");
+
+            WebElement userName = driver.findElement(By.id("user-name"));
+            WebElement password = driver.findElement(By.id("password"));
+
+            userName.sendKeys("standard_user1");
+            password.sendKeys("secret_sauce");
+
+            WebElement loginBtn = driver.findElement(By.id("login-button"));
+            loginBtn.click();
+
+            Thread.sleep(1000);
+
+           //String error =  driver.findElement(By.className("error-button")).getText();
+
+            WebElement errorNotif = driver.findElement(By.cssSelector("div .error-message-container > h3"));
+
+           assertEquals("Epic sadface: Username and password do not match any user in this service", errorNotif.getText());
+        }
+    }
+
 }
