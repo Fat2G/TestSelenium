@@ -144,8 +144,6 @@ public class SwagLabsTest {
 
             Thread.sleep(1000);
 
-           //String error =  driver.findElement(By.className("error-button")).getText();
-
             WebElement errorNotif = driver.findElement(By.cssSelector("div .error-message-container > h3"));
 
            assertEquals("Epic sadface: Username and password do not match any user in this service", errorNotif.getText());
