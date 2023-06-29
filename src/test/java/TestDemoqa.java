@@ -53,7 +53,7 @@ public class TestDemoqa {
 	}
 	
 	@Test
-	public void it_shoud_right_click () throws InterruptedException {
+	public void it_should_right_click() throws InterruptedException {
 		for(WebDriver driver : drivers) {
 			driver.get("https://demoqa.com/buttons");
 			
