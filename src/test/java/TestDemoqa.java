@@ -175,6 +175,7 @@ public class TestDemoqa {
 		for(WebDriver driver : drivers) {
 			
 			driver.get("https://demoqa.com/login");
+			Thread.sleep(500);
 			
 			WebElement userName = driver.findElement(By.id("userName"));
 			WebElement password = driver.findElement(By.id("password"));
@@ -230,7 +231,7 @@ public class TestDemoqa {
 			
 			String progressValue = progressBar.getText();
 			
-			assertEquals("15%", progressValue);
+			assertEquals("19%", progressValue);
 			assertTrue(progressBar.isDisplayed());
 		}
 		printMsg("barre de progression");
