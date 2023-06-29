@@ -23,10 +23,6 @@ public class SwagLabsTest {
 		private final String    socialNetwork;
 		
 		public TestNetworkButtons (WebDriver driver, String socialNetwork) {
-			if (this.driver != null) {
-				this.driver.close();
-				this.driver.quit();
-			}
 			this.driver = driver;
 			this.socialNetwork = socialNetwork;
 		}
