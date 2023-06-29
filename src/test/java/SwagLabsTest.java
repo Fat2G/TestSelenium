@@ -1,5 +1,4 @@
 import org.junit.experimental.runners.Enclosed;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -20,7 +19,7 @@ public class SwagLabsTest {
 	@RunWith(Parameterized.class)
 	public static class TestNetworkButtons {
 		private       WebDriver driver;
-		private final String    socialNetwork;
+		private String    socialNetwork;
 		
 		public TestNetworkButtons (WebDriver driver, String socialNetwork) {
 			this.driver = driver;
@@ -55,7 +54,7 @@ public class SwagLabsTest {
 			driver.findElement(By.cssSelector(".social_" + socialNetwork + " a")).click();
 			
 			// Wait until there are 2 tabs
-			new FluentWait<WebDriver>(driver).until(numberOfWindowsToBe(2));
+			new FluentWait<>(driver).until(numberOfWindowsToBe(2));
 			
 			// Loop through until we find a new window handle
 			for(String windowHandle : driver.getWindowHandles()) {
