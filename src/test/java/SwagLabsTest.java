@@ -1,3 +1,4 @@
+import org.junit.Ignore;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.Test;
@@ -31,7 +32,7 @@ public class SwagLabsTest {
             this.username = username;
             this.password = "secret_sauce";
         }
-        
+
         @AfterEach
         public void quit() {
             driver.quit();
@@ -132,6 +133,34 @@ public class SwagLabsTest {
             Thread.sleep(1000);
 
             assertTrue(driver.getCurrentUrl().contains("?id=4"));
+        }
+
+        @Ignore
+        public void it_should_open_item_detail_by_title() throws InterruptedException {
+            driver.get("https://www.saucedemo.com/");
+            connect();
+
+            WebElement itemLink = driver.findElement(By.cssSelector("div.inventory_item_label > a#item_4_title_link"));
+
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.elementToBeClickable(itemLink));
+
+            itemLink.click();
+            Thread.sleep(1000);
+
+            assertTrue(driver.getCurrentUrl().contains("?id=4"));
+        }
+
+        @Test
+        public void it_should_show_item_not_found() throws InterruptedException {
+            driver.get("https://www.saucedemo.com/");
+            connect();
+            driver.get("https://www.saucedemo.com/inventory-item.html");
+
+            WebElement itemLink = driver.findElement(By.cssSelector(".inventory_details_name"));
+            String msgError = itemLink.getText();
+
+            assertEquals("ITEM NOT FOUND", msgError);
         }
     }
 
