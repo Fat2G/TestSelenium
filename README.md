@@ -24,4 +24,4 @@ This repository contains the code for the automated tests done in Java using Sel
 
 ## Other
 
-- it_should_open_social_network (parameterized)
+- ~~it_should_open_social_network (parameterized)~~
