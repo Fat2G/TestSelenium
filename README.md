@@ -23,7 +23,7 @@ This repository contains the code for the automated tests done in Java using Sel
 
 ## Checkout
 
-- it_should_calculate_total **Ylane**
+- ~~it_should_calculate_total~~
 - it_should_not_checkout_if_missing_information **Ylane**
 - it_should_remove_basket_after_checkout **Fatou**
 
