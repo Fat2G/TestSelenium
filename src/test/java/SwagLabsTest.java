@@ -135,12 +135,12 @@ public class SwagLabsTest {
             assertTrue(driver.getCurrentUrl().contains("?id=4"));
         }
 
-        @Ignore
+        @Test
         public void it_should_open_item_detail_by_title() throws InterruptedException {
             driver.get("https://www.saucedemo.com/");
             connect();
 
-            WebElement itemLink = driver.findElement(By.cssSelector("div.inventory_item_label > a#item_4_title_link"));
+            WebElement itemLink = driver.findElement(By.cssSelector("#item_4_title_link > div"));
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.elementToBeClickable(itemLink));
