@@ -1,4 +1,4 @@
-package cucumber.stepdefs;
+package cucumber;
 
 import io.cucumber.java.en.*;
 import org.openqa.selenium.By;
