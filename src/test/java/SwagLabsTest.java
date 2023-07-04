@@ -1,166 +1,152 @@
-import org.junit.Ignore;
-import org.junit.experimental.runners.Enclosed;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@RunWith(Enclosed.class)
 public class SwagLabsTest {
 
-    @RunWith(Parameterized.class)
-    public static class Login {
-        private WebDriver driver;
-        private String username;
-        private String password;
+    List<WebDriver> drivers = new ArrayList<>();
 
-        public Login(WebDriver driver, String username) {
-            this.driver = driver;
-            this.username = username;
-            this.password = "secret_sauce";
-        }
+    @BeforeEach
+    public void setUp () {
+        drivers.add(new ChromeDriver());
+        drivers.add(new FirefoxDriver());
+    }
 
-        @AfterEach
-        public void quit() {
+    @AfterEach
+    public void quit () {
+        for(WebDriver driver : drivers) {
             driver.quit();
-            driver.close();
         }
+    }
 
-        public void printMsg(String name) {
-                System.out.println("Test " + name + " passé avec " + driver.getClass().getSimpleName());
+    public void connect(WebDriver driver) throws InterruptedException {
+
+        String username = "standard_user";
+
+        String password = "secret_sauce";
+
+        driver.findElement(By.id("user-name")).sendKeys(username);
+        driver.findElement(By.id("password")).sendKeys(password);
+
+        driver.findElement(By.id("login-button")).click();
+        Thread.sleep(1500);
+
+
+    }
+
+    public void printMsg (String name) {
+        for(WebDriver driver : drivers) {
+            System.out.println("Test " + name + " passé avec " + driver.getClass().getSimpleName());
         }
+    }
 
-        @Parameterized.Parameters
-        public static List<Object[]> data() {
-            return Arrays.asList(new Object[][]{
-                    {new ChromeDriver(), "standard_user"},
-                    {new ChromeDriver(), "problem_user"},
-                    {new ChromeDriver(), "performance_glitch_user"},
-                    {new FirefoxDriver(), "standard_user"},
-                    {new FirefoxDriver(), "problem_user"},
-                    {new FirefoxDriver(), "performance_glitch_user"}
-            });
-        }
+    @Test
+    public void it_should_logout() throws InterruptedException {
 
-        @Test
-        public void it_should_login() throws InterruptedException {
+        for(WebDriver driver : drivers) {
+            driver.get("https://www.saucedemo.com/inventory.html");
 
-                driver.get("https://www.saucedemo.com/");
+            connect(driver);
 
-                driver.findElement(By.id("user-name")).sendKeys(this.username);
-                driver.findElement(By.id("password")).sendKeys(this.password);
+            WebElement burgerBtn = driver.findElement(By.id("react-burger-menu-btn"));
+            burgerBtn.click();
 
-                driver.findElement(By.id("login-button")).click();
-                Thread.sleep(1000);
+            Thread.sleep(500);
+            WebElement logoutBtn = driver.findElement(By.id("logout_sidebar_link"));
+            logoutBtn.click();
 
-
-                assertTrue(driver.getCurrentUrl().contains("inventory.html"));
-                WebElement loginHeader = driver.findElement(By.className("app_logo"));
-                assertEquals("Swag Labs", loginHeader.getText());
-
-                printMsg("login");
-
-        }
-
-        //TODO: externaliser dans une classe
-        @Test
-        public void it_should_not_login() throws InterruptedException {
-
-            driver.get("https://www.saucedemo.com/");
-
-            driver.findElement(By.id("user-name")).sendKeys("locked_out_user");
-            driver.findElement(By.id("password")).sendKeys(this.password);
-
-            driver.findElement(By.id("login-button")).click();
             Thread.sleep(1000);
 
-            String errorMsg = "Epic sadface: Sorry, this user has been locked out.";
+            String currentUrl = driver.getCurrentUrl();
+            assertEquals("https://www.saucedemo.com/", currentUrl);
+        }
+        printMsg("de logout");
+    }
+    @Test
+    public void it_should_add_basket() throws InterruptedException {
+        for(WebDriver driver : drivers) {
+            driver.get("https://www.saucedemo.com/inventory.html");
 
-            assertFalse(driver.getCurrentUrl().contains("inventory.html"));
-            assertEquals(errorMsg, driver.findElement(By.cssSelector("div.error-message-container.error>h3")).getText());
+            connect(driver);
 
-            printMsg("error login");
+            WebElement addToCartBtn = driver.findElement(By.id("add-to-cart-sauce-labs-backpack"));
+            addToCartBtn.click();
+
+            Thread.sleep(500);
+
+            String articleNumber = driver.findElement(By.className("shopping_cart_badge")).getText();
+
+            assertEquals("1", articleNumber);
+        }
+    }
+    @Test
+    public void it_should_remove() throws InterruptedException {
+        for (WebDriver driver : drivers){
+            driver.get("https://www.saucedemo.com/inventory.html");
+
+            connect(driver);
+
+            WebElement addToCartBtn = driver.findElement(By.id("add-to-cart-sauce-labs-backpack"));
+            addToCartBtn.click();
+
+            Thread.sleep(500);
+
+            WebElement addToCartBtn2 = driver.findElement(By.id("add-to-cart-sauce-labs-bike-light"));
+            addToCartBtn2.click();
+
+            Thread.sleep(500);
+
+            WebElement addToCartBtn3 = driver.findElement(By.id("add-to-cart-sauce-labs-bolt-t-shirt"));
+            addToCartBtn3.click();
+
+            Thread.sleep(500);
+
+            WebElement removeBtn = driver.findElement(By.id("remove-sauce-labs-bike-light"));
+            removeBtn.click();
+
+            Thread.sleep(500);
+
+            WebElement removeBtn2 = driver.findElement(By.id("remove-sauce-labs-backpack"));
+            removeBtn2.click();
+
+            Thread.sleep(500);
+
+            String articleNumber = driver.findElement(By.className("shopping_cart_badge")).getText();
+
+            assertEquals("1",articleNumber);
 
         }
     }
 
-    @RunWith(Parameterized.class)
-    public static class Item {
-        private WebDriver driver;
-
-        public Item(WebDriver driver) {
-            this.driver = driver;
-        }
-
-        public void connect(){
-            driver.findElement(By.id("user-name")).sendKeys("standard_user");
-            driver.findElement(By.id("password")).sendKeys("secret_sauce");
-            driver.findElement(By.id("login-button")).click();
-        }
-
-        @Parameterized.Parameters
-        public static List<Object[]> data() {
-            return Arrays.asList(new Object[][]{
-                    {new ChromeDriver()},
-                    {new FirefoxDriver()}
-            });
-        }
-
-        @Test
-        public void it_should_open_item_detail_by_img() throws InterruptedException {
+    @Test
+    public void it_should_not_access_pages_if_not_logged() throws InterruptedException {
+        for(WebDriver driver : drivers) {
             driver.get("https://www.saucedemo.com/");
-            connect();
 
-            WebElement itemLink = driver.findElement(By.id("item_4_img_link"));
+            WebElement userName = driver.findElement(By.id("user-name"));
+            WebElement password = driver.findElement(By.id("password"));
 
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-            wait.until(ExpectedConditions.elementToBeClickable(itemLink));
+            userName.sendKeys("standard_user1");
+            password.sendKeys("secret_sauce");
 
-            itemLink.click();
+            WebElement loginBtn = driver.findElement(By.id("login-button"));
+            loginBtn.click();
+
             Thread.sleep(1000);
 
-            assertTrue(driver.getCurrentUrl().contains("?id=4"));
-        }
+            WebElement errorNotif = driver.findElement(By.cssSelector("div .error-message-container > h3"));
 
-        @Test
-        public void it_should_open_item_detail_by_title() throws InterruptedException {
-            driver.get("https://www.saucedemo.com/");
-            connect();
-
-            WebElement itemLink = driver.findElement(By.cssSelector("#item_4_title_link > div"));
-
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            wait.until(ExpectedConditions.elementToBeClickable(itemLink));
-
-            itemLink.click();
-            Thread.sleep(1000);
-
-            assertTrue(driver.getCurrentUrl().contains("?id=4"));
-        }
-
-        @Test
-        public void it_should_show_item_not_found() throws InterruptedException {
-            driver.get("https://www.saucedemo.com/");
-            connect();
-            driver.get("https://www.saucedemo.com/inventory-item.html");
-
-            WebElement itemLink = driver.findElement(By.cssSelector(".inventory_details_name"));
-            String msgError = itemLink.getText();
-
-            assertEquals("ITEM NOT FOUND", msgError);
+           assertEquals("Epic sadface: Username and password do not match any user in this service", errorNotif.getText());
         }
     }
 
