@@ -3,6 +3,8 @@ Feature: Je fais un achat
   Scenario: Je choisis un article et l'achète
     Given Je suis sur la page de connexion du site
     When Je saisis mes nom d'utilisateur et de mot de passe dans les champs de texte
+      | username       | password      |
+      | standard_user  | secret_sauce  |
     And Je clique sur le bouton de connection
     Then Je devrais voir la page d'accueil
 

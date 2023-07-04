@@ -1,3 +1,4 @@
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
@@ -6,6 +7,9 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.util.List;
+import java.util.Map;
 
 public class StepDefinitions {
     private WebDriver driver;
@@ -29,25 +33,33 @@ public class StepDefinitions {
         }
     }
 
-    //teste de connection
+    //teste de connexion
     @Given("Je suis sur la page de connexion du site")
-    public void jeSuisSurLaPageDeConnectionDuSite() {
-        loginSteps.jeSuisSurLaPageDeConnectionDuSite();
+    public void jeSuisSurLaPageDeConnexionDuSite() {
+        loginSteps.jeSuisSurLaPageDeConnexionDuSite();
     }
 
     @When("Je saisis mes nom d'utilisateur et de mot de passe dans les champs de texte")
-    public void jeSaisisMesNomDutilisateurEtDeMotDePasseDansLesChampsDeTexte() {
-        loginSteps.jeSaisisMesNomDutilisateurEtDeMotDePasseDansLesChampsDeTexte();
+    public void jeSaisisMesNomDutilisateurEtDeMotDePasseDansLesChampsDeTexte(DataTable dataTable) throws InterruptedException {
+        List<Map<String, String>> data = dataTable.asMaps(String.class, String.class);
+        String username = data.get(0).get("username");
+        String password = data.get(0).get("password");
+        loginSteps.jeSaisisMesNomDutilisateurEtDeMotDePasseDansLesChampsDeTexte(username, password);
     }
 
     @And("Je clique sur le bouton de connection")
-    public void jeCliqueSurLeBoutonDeConnection() {
-        loginSteps.jeCliqueSurLeBoutonDeConnection();
+    public void jeCliqueSurLeBoutonDeConnexion() throws InterruptedException {
+        loginSteps.jeCliqueSurLeBoutonDeConnexion();
     }
 
     @Then("Je devrais voir la page d'accueil")
     public void jeDevraisVoirLaPageDaccueuil() {
         loginSteps.jeDevraisVoirLaPageDaccueuil();
+    }
+
+    @Then ("Je devrais recevoir un message d'erreur")
+    public void JeDevraisRecevoirUnMessageDerreur() {
+        loginSteps.JeDevraisRecevoirUnMessageDerreur();
     }
 
     // teste sur les items

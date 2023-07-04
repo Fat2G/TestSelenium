@@ -1,7 +1,3 @@
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -13,22 +9,28 @@ public class LoginStepsDef {
         this.driver = driver;
     }
 
-    public void jeSuisSurLaPageDeConnectionDuSite() {
+    public void jeSuisSurLaPageDeConnexionDuSite() {
         driver.get("https://www.saucedemo.com/");
     }
 
-    public void jeSaisisMesNomDutilisateurEtDeMotDePasseDansLesChampsDeTexte() {
-        driver.findElement(By.id("user-name")).sendKeys("standard_user");
-        driver.findElement(By.id("password")).sendKeys("secret_sauce");
+    public void jeSaisisMesNomDutilisateurEtDeMotDePasseDansLesChampsDeTexte(String username, String password) throws InterruptedException {
+        driver.findElement(By.id("user-name")).sendKeys(username);
+        driver.findElement(By.id("password")).sendKeys(password);
     }
 
-    public void jeCliqueSurLeBoutonDeConnection() {
+    public void jeCliqueSurLeBoutonDeConnexion() throws InterruptedException {
         driver.findElement(By.id("login-button")).click();
+        Thread.sleep(500);
     }
 
     public void jeDevraisVoirLaPageDaccueuil() {
         String expectedResults = "Swag Labs";
         Assert.assertEquals(expectedResults, driver.findElement(By.className("app_logo")).getText());
+    }
+
+    public void JeDevraisRecevoirUnMessageDerreur() {
+        String errorMsg = "Epic sadface: Sorry, this user has been locked out.";
+        Assert.assertEquals(errorMsg, driver.findElement(By.cssSelector("div.error-message-container>h3")).getText());
 
     }
 }
