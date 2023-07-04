@@ -4,14 +4,20 @@ import io.cucumber.java.en.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 import static org.junit.Assert.assertEquals;
 
 public class CucumberStepsDefinitions {
-    WebDriver driver = new ChromeDriver();
+    WebDriver driver;
     
-    @Given("I am on the website login page")
-    public void iAmOnTheWebsiteLoginPage () {
+    @Given("I am on the website login page with {string}")
+    public void iAmOnTheWebsiteLoginPageWith (String drivername) {
+        if (drivername.equals("chrome")){
+            driver = new ChromeDriver();
+        } else if (drivername.equals("firefox")){
+            driver = new FirefoxDriver();
+        }
         driver.get("https://www.saucedemo.com");
     }
     
