@@ -1,0 +1,39 @@
+package cucumber.stepdefs;
+
+import io.cucumber.java.en.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import static org.junit.Assert.assertEquals;
+
+public class CucumberStepsDefinitions {
+    WebDriver driver = new ChromeDriver();
+    
+    @Given("I am on the website login page")
+    public void iAmOnTheWebsiteLoginPage () {
+        driver.get("https://www.saucedemo.com");
+    }
+    
+    @When("I enter correct login information")
+    public void iEnterCorrectLoginInformation () {
+        String username = "standard_user";
+        
+        String password = "secret_sauce";
+        
+        driver.findElement(By.id("user-name")).sendKeys(username);
+        driver.findElement(By.id("password")).sendKeys(password);
+    }
+    
+    @And("I click on the login button")
+    public void iClickOnTheLoginButton () throws InterruptedException {
+        driver.findElement(By.id("login-button")).click();
+        Thread.sleep(1500);
+    }
+    
+    @Then("I should be on the inventory page")
+    public void iShouldBeOnTheInventoryPage () {
+        assertEquals("https://www.saucedemo.com/inventory.html", driver.getCurrentUrl());
+        driver.quit();
+    }
+}
