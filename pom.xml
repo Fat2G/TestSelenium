@@ -61,6 +61,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
@@ -73,12 +74,18 @@
                 <version>2.18.1</version>
                 <configuration>
                     <includes>
+                        <include>**/*TestRunner.java</include>
+                        <include>**/*SwagLabsTest.java</include>
                         <include>**/*CucumberIT.java</include>
                     </includes>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>4.0.0-M8</version>
+            </plugin>
         </plugins>
     </build>
-
-
 </project>
