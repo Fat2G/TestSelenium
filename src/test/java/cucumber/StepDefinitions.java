@@ -18,6 +18,7 @@ public class StepDefinitions {
     private LoginStepsDef loginSteps;
     private ItemStepsDef itemSteps;
     private BasketStepsDef basketSteps;
+    private FilterStepsDef filterSteps;
 
 
     @Before
@@ -26,6 +27,7 @@ public class StepDefinitions {
         loginSteps = new LoginStepsDef(driver);
         basketSteps = new BasketStepsDef(driver);
         itemSteps = new ItemStepsDef(driver);
+        filterSteps = new FilterStepsDef(driver);
     }
 
     @After
@@ -139,6 +141,18 @@ public class StepDefinitions {
     @And("Je clique sur le bouton retour")
     public void jeCliqueSurLeBoutonRetour() {
         basketSteps.jeCliqueSurLeBoutonRetour();
+    }
+
+    // filtrage par prix croissant
+
+    @When("Je sélectionne l'option de filtrage par prix croissant")
+    public void jeSelectionneLOptionDeFiltrageParPrixCroissant() throws InterruptedException {
+        filterSteps.jeSelectionneLOptionDeFiltrageParPrixCroissant();
+    }
+
+    @Then("Les produits sont affichés par prix croissant")
+    public void lesProduitsSontAffichesParPrixCroissant() {
+        filterSteps.lesProduitsSontAffichesParPrixCroissant();
     }
 }
 
