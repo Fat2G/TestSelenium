@@ -45,14 +45,18 @@
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
             <version>7.12.1</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
             <version>7.12.1</version>
-            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>net.masterthought</groupId>
+            <artifactId>cucumber-reporting</artifactId>
+            <version>5.7.5</version>
         </dependency>
     </dependencies>
 
@@ -63,8 +67,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
+                    <source>19</source>
+                    <target>19</target>
                 </configuration>
             </plugin>
 
@@ -74,8 +78,7 @@
                 <version>2.18.1</version>
                 <configuration>
                     <includes>
-                        <include>**/*TestRunner.java</include>
-                        <include>**/*SwagLabsTest.java</include>
+<!--                        <include>**/*SwagLabsTest.java</include>-->
                         <include>**/*CucumberIT.java</include>
                     </includes>
                 </configuration>
@@ -85,6 +88,12 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>4.0.0-M8</version>
+            </plugin>
+
+            <plugin>
+                <groupId>net.masterthought</groupId>
+                <artifactId>maven-cucumber-reporting</artifactId>
+                <version>5.7.5</version>
             </plugin>
         </plugins>
     </build>
