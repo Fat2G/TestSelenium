@@ -22,7 +22,8 @@ Feature: Je fais un achat
     Then Je devrais voir la page de confirmation de la commande
     And Je clique sur le bouton retour
 
-    Scenario: J'ajoute un article dans le panier
+
+  Scenario: J'ajoute un article dans le panier
       Given Je suis sur la page de connexion du site
       When Je saisis mes nom d'utilisateur et de mot de passe dans les champs de texte
         | username       | password      |
@@ -33,6 +34,7 @@ Feature: Je fais un achat
       When je choisis un article à mettre dans le panier
       And je clique sur le bouton Add to cart
       Then une notification d'ajout a été ajouté
+
 
   Scenario: Je supprime un article dans le panier
     Given Je suis sur la page de connexion du site

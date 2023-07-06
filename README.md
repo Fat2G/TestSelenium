@@ -1,32 +1,31 @@
 # TODO tests list on website [Swag Labs](https://www.saucedemo.com/) with Selenium
 
-This repository contains the code for the automated tests done in Java using Selenium
+This repository contains the code for the automated tests done in Java using Selenium and Cucumber
 
 ## Login
 
-- ~~it_should_login (parameterized)~~  
-- ~~it_should_not_login~~  
-- ~~it_should_logout~~  
-- ~~it_should_add_basket~~  
-- ~~it_should_not_access_pages_if_not_logged~~  
-- ~~it_should_show_item_not_found~~  
+- Je me connecte au site :heavy_check_mark:
+- Login with different drivers :heavy_check_mark:
+- Mon compte est bloqué :heavy_check_mark:
+- Je me déconnecte du site :heavy_check_mark:
+- J'essaye de me connecter avec un mauvais mail et mot de passe :heavy_check_mark:
+- Je me connecte au site :heavy_check_mark: (test en erreur)
 
 ## Item
 
-- ~~it_should_should_open_item_detail_by_img~~ 
-- ~~it_should_should_open_item_detail_by_title~~
+- Je rentre une url de produit en omettant l'id :heavy_check_mark:
+- Open item detail page by clicking image :heavy_check_mark:
+- Open item detail page by clicking title :heavy_check_mark:
+
+## Filter items
+
+- Je filtre par prix croissant :heavy_check_mark:
 
 ## Basket
 
-- it_should_add_item_to_cart  
-- it_should_remove_item_from_cart
+- J'ajoute un article dans le panier :heavy_check_mark:
+- Je supprime un article dans le panier :heavy_check_mark:
 
 ## Checkout
 
-- ~~it_should_calculate_total~~
-- it_should_not_checkout_if_missing_information **Ylane**
-- ~~it_should_checkout_basket~~
-
-## Other
-
-- ~~it_should_open_social_network (parameterized)~~
+- Je choisis un article et l'achète :heavy_check_mark:
