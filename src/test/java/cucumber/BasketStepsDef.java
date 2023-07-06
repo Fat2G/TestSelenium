@@ -1,8 +1,6 @@
 package cucumber;
 
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -79,5 +77,50 @@ public class BasketStepsDef {
 
     public void jeCliqueSurLeBoutonRetour() {
         driver.findElement(By.id("back-to-products")).click();
+    }
+
+    public void jeCliqueSurLeBoutonAddToCart() throws InterruptedException {
+        driver.findElement(By.id("add-to-cart-sauce-labs-backpack")).click();
+        Thread.sleep(500);
+    }
+
+    public void uneNotificationDAjoutAeteAjoute() {
+        String articleNumber = driver.findElement(By.className("shopping_cart_badge")).getText();
+        assertEquals("2", articleNumber);
+    }
+
+    public void jeChoisisUnArticleÀSupprimerDuPanier() throws InterruptedException {
+        WebElement addToCartBtn = driver.findElement(By.id("add-to-cart-sauce-labs-backpack"));
+        addToCartBtn.click();
+
+        Thread.sleep(500);
+
+        WebElement addToCartBtn2 = driver.findElement(By.id("add-to-cart-sauce-labs-bike-light"));
+        addToCartBtn2.click();
+
+        Thread.sleep(500);
+
+        WebElement addToCartBtn3 = driver.findElement(By.id("add-to-cart-sauce-labs-bolt-t-shirt"));
+        addToCartBtn3.click();
+
+        Thread.sleep(500);
+    }
+
+    public void jeCliqueSurLeBoutonRemove() throws InterruptedException {
+        WebElement removeBtn = driver.findElement(By.id("remove-sauce-labs-bike-light"));
+        removeBtn.click();
+
+        Thread.sleep(500);
+
+        WebElement removeBtn2 = driver.findElement(By.id("remove-sauce-labs-backpack"));
+        removeBtn2.click();
+
+        Thread.sleep(500);
+    }
+
+    public void laNotificationDAjoutSeraDecremente() {
+        String articleNumber = driver.findElement(By.className("shopping_cart_badge")).getText();
+
+        assertEquals("1",articleNumber);
     }
 }

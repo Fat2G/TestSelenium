@@ -7,11 +7,15 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.List;
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StepDefinitions {
     private WebDriver driver;
@@ -51,7 +55,7 @@ public class StepDefinitions {
         loginSteps.jeSaisisMesNomDutilisateurEtDeMotDePasseDansLesChampsDeTexte(username, password);
     }
 
-    @And("Je clique sur le bouton de connection")
+    @And("Je clique sur le bouton de connexion")
     public void jeCliqueSurLeBoutonDeConnexion() throws InterruptedException {
         loginSteps.jeCliqueSurLeBoutonDeConnexion();
     }
@@ -153,6 +157,60 @@ public class StepDefinitions {
     @Then("Les produits sont affichés par prix croissant")
     public void lesProduitsSontAffichesParPrixCroissant() {
         filterSteps.lesProduitsSontAffichesParPrixCroissant();
+    }
+
+    //Test Logout
+
+    @And("Je clique sur la barre de navigation")
+    public void jeCliqueSurLaBarreDeNavigation() throws InterruptedException {
+        loginSteps.jeCliqueSurLaBarreDeNavigation();
+    }
+
+    @And("Je clique sur le bouton Logout")
+    public void jeCliqueSurLeBoutonLogout() throws InterruptedException {
+        loginSteps.jeCliqueSurLeBoutonLogout();
+    }
+
+    @Then("Je devrais voir la page de connexion")
+    public void jeDevraisVoirLaPageDeConnexion() {
+        loginSteps.jeDevraisVoirLaPageDeConnexion();
+    }
+
+
+    @When("je choisis un article à mettre dans le panier")
+    public void jeChoisisUnArticleÀMettreDansLePanier() {
+        basketSteps.jeChoisisUnProduitAMettreAuPanier();
+    }
+
+    @And("je clique sur le bouton Add to cart")
+    public void jeCliqueSurLeBoutonAddToCart() throws InterruptedException {
+        basketSteps.jeCliqueSurLeBoutonAddToCart();
+    }
+
+
+    @Then("une notification d'ajout a été ajouté")
+    public void uneNotificationDAjoutAeteAjoute() {
+        basketSteps.uneNotificationDAjoutAeteAjoute();
+    }
+
+    @When("je choisis un article à supprimer du panier")
+    public void jeChoisisUnArticleÀSupprimerDuPanier() throws InterruptedException {
+        basketSteps.jeChoisisUnArticleÀSupprimerDuPanier();
+    }
+
+    @And("je clique sur le bouton remove")
+    public void jeCliqueSurLeBoutonRemove() throws InterruptedException {
+        basketSteps.jeCliqueSurLeBoutonRemove();
+    }
+
+    @Then("la notification d'ajout sera decremente")
+    public void laNotificationDAjoutSeraDecremente() {
+        basketSteps.laNotificationDAjoutSeraDecremente();
+    }
+
+    @Then("Je devrais recevoir une erreur")
+    public void jeDevraisRecevoirUneErreur() {
+        loginSteps.jeDevraisRecevoirUneErreur();
     }
 }
 

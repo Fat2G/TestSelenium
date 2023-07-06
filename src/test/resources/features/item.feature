@@ -4,7 +4,7 @@ Feature: Je cherche un produit
     When Je saisis mes nom d'utilisateur et de mot de passe dans les champs de texte
       | username       | password      |
       | standard_user  | secret_sauce  |
-    And Je clique sur le bouton de connection
+    And Je clique sur le bouton de connexion
     Then Je devrais voir la page d'accueil
     When Je clique sur un produit
     Then Je devrais voir la page détail du produit
@@ -14,7 +14,7 @@ Feature: Je cherche un produit
     When Je saisis mes nom d'utilisateur et de mot de passe dans les champs de texte
       | username       | password      |
       | standard_user  | secret_sauce  |
-    And Je clique sur le bouton de connection
+    And Je clique sur le bouton de connexion
     Then Je devrais voir la page d'accueil
     When Je rentre l'url en dur sans l'id du produit
     Then Je ne verrais pas la page détail du produit

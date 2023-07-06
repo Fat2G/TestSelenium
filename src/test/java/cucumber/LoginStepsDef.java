@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class LoginStepsDef {
     private WebDriver driver;
 
@@ -33,6 +35,23 @@ public class LoginStepsDef {
     public void JeDevraisRecevoirUnMessageDerreur() {
         String errorMsg = "Epic sadface: Sorry, this user has been locked out.";
         Assert.assertEquals(errorMsg, driver.findElement(By.cssSelector("div.error-message-container>h3")).getText());
+    }
 
+    public void jeCliqueSurLaBarreDeNavigation() throws InterruptedException {
+        driver.findElement(By.id("react-burger-menu-btn")).click();
+        Thread.sleep(500);
+
+    }
+    public void jeCliqueSurLeBoutonLogout() throws InterruptedException {
+        driver.findElement(By.id("logout_sidebar_link")).click();
+        Thread.sleep(500);
+    }
+    public void jeDevraisVoirLaPageDeConnexion() {
+        assertTrue(driver.getCurrentUrl().contains("https://www.saucedemo.com/"));
+    }
+
+    public void jeDevraisRecevoirUneErreur() {
+        String errorMsg = "Epic sadface: Username and password do not match any user in this service";
+        Assert.assertEquals(errorMsg, driver.findElement(By.cssSelector("div .error-message-container > h3")).getText());
     }
 }
