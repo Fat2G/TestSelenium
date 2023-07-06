@@ -44,9 +44,8 @@ public class CucumberStepsDefinitions {
     }
     
     @And("I click on the login button")
-    public void iClickOnTheLoginButton () throws InterruptedException {
+    public void iClickOnTheLoginButton () {
         driver.findElement(By.id("login-button")).click();
-        Thread.sleep(1500);
     }
     
     @Then("I should be on the inventory page")
@@ -55,14 +54,23 @@ public class CucumberStepsDefinitions {
     }
     
     @And("I click on the image of product with {int}")
-    public void iClickOnTheImageOfProductWith (int id) throws InterruptedException {
+    public void iClickOnTheImageOfProductWith (int id) {
         WebElement itemLink = driver.findElement(By.id("item_" + id + "_img_link"));
         
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.elementToBeClickable(itemLink));
         
         itemLink.click();
-        Thread.sleep(1000);
+    }
+    
+    @And("I click on the name of product with {int}")
+    public void iClickOnTheNameOfProductWithId (int id) {
+        WebElement itemLink = driver.findElement(By.cssSelector("#item_" + id + "_title_link > div"));
+        
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(itemLink));
+        
+        itemLink.click();
     }
     
     @Then("I should be on the item detail page of product with {int}")

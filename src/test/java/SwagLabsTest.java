@@ -20,12 +20,12 @@ public class SwagLabsTest {
     
     
     @RunWith(Parameterized.class)
-    public static class Login {
+    public static class TestLogin {
         private WebDriver driver;
         private String    username;
         private String    password;
         
-        public Login (WebDriver driver, String username) {
+        public TestLogin (WebDriver driver, String username) {
             this.driver = driver;
             this.username = username;
             this.password = "secret_sauce";
@@ -70,7 +70,6 @@ public class SwagLabsTest {
             printMsg("login");
         }
         
-        //TODO: externaliser dans une classe
         @Test
         public void it_should_not_login () throws InterruptedException {
             
@@ -94,10 +93,10 @@ public class SwagLabsTest {
     
     
     @RunWith(Parameterized.class)
-    public static class Item {
+    public static class TestItem {
         private WebDriver driver;
         
-        public Item (WebDriver driver) {
+        public TestItem (WebDriver driver) {
             this.driver = driver;
         }
         
@@ -145,7 +144,7 @@ public class SwagLabsTest {
         }
         
         @Test
-        public void it_should_show_item_not_found () throws InterruptedException {
+        public void it_should_show_item_not_found () {
             driver.get("https://www.saucedemo.com/");
             connect();
             driver.get("https://www.saucedemo.com/inventory-item.html");
