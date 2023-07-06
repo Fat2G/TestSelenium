@@ -19,7 +19,6 @@ public class SwagLabsTest {
     private static final int TAX_PERCENT = 8;
     
     
-    
     @RunWith(Parameterized.class)
     public static class Login {
         private WebDriver driver;
@@ -93,6 +92,7 @@ public class SwagLabsTest {
         }
     }
     
+    
     @RunWith(Parameterized.class)
     public static class Item {
         private WebDriver driver;
@@ -155,7 +155,101 @@ public class SwagLabsTest {
             
             assertEquals("ITEM NOT FOUND", msgError);
         }
+        
+        @Test
+        public void it_should_logout () throws InterruptedException {
+            driver.get("https://www.saucedemo.com/");
+            
+            connect();
+            
+            WebElement burgerBtn = driver.findElement(By.id("react-burger-menu-btn"));
+            burgerBtn.click();
+            
+            Thread.sleep(500);
+            WebElement logoutBtn = driver.findElement(By.id("logout_sidebar_link"));
+            logoutBtn.click();
+            
+            Thread.sleep(1000);
+            
+            String currentUrl = driver.getCurrentUrl();
+            assertEquals("https://www.saucedemo.com/", currentUrl);
+        }
+        
+        
+        @Test
+        public void it_should_add_basket () throws InterruptedException {
+            driver.get("https://www.saucedemo.com/");
+            
+            connect();
+            
+            WebElement addToCartBtn = driver.findElement(By.id("add-to-cart-sauce-labs-backpack"));
+            addToCartBtn.click();
+            
+            Thread.sleep(500);
+            
+            String articleNumber = driver.findElement(By.className("shopping_cart_badge")).getText();
+            
+            assertEquals("1", articleNumber);
+        }
+        
+        @Test
+        public void it_should_remove () throws InterruptedException {
+            driver.get("https://www.saucedemo.com/");
+            
+            connect();
+            
+            WebElement addToCartBtn = driver.findElement(By.id("add-to-cart-sauce-labs-backpack"));
+            addToCartBtn.click();
+            
+            Thread.sleep(500);
+            
+            WebElement addToCartBtn2 = driver.findElement(By.id("add-to-cart-sauce-labs-bike-light"));
+            addToCartBtn2.click();
+            
+            Thread.sleep(500);
+            
+            WebElement addToCartBtn3 = driver.findElement(By.id("add-to-cart-sauce-labs-bolt-t-shirt"));
+            addToCartBtn3.click();
+            
+            Thread.sleep(500);
+            
+            WebElement removeBtn = driver.findElement(By.id("remove-sauce-labs-bike-light"));
+            removeBtn.click();
+            
+            Thread.sleep(500);
+            
+            WebElement removeBtn2 = driver.findElement(By.id("remove-sauce-labs-backpack"));
+            removeBtn2.click();
+            
+            Thread.sleep(500);
+            
+            String articleNumber = driver.findElement(By.className("shopping_cart_badge")).getText();
+            
+            assertEquals("1", articleNumber);
+        }
+        
+        @Test
+        public void it_should_not_access_pages_if_not_logged () throws InterruptedException {
+            driver.get("https://www.saucedemo.com/");
+            
+            WebElement userName = driver.findElement(By.id("user-name"));
+            WebElement password = driver.findElement(By.id("password"));
+            
+            userName.sendKeys("standard_user1");
+            password.sendKeys("secret_sauce");
+            
+            WebElement loginBtn = driver.findElement(By.id("login-button"));
+            loginBtn.click();
+            
+            Thread.sleep(1000);
+            
+            WebElement errorNotif = driver.findElement(By.cssSelector("div .error-message-container > h3"));
+            
+            assertEquals("Epic sadface: Username and password do not match any user in this service",
+                errorNotif.getText());
+        }
     }
+    
     
     @RunWith(Parameterized.class)
     public static class TestNetworkButtons {
@@ -212,6 +306,7 @@ public class SwagLabsTest {
             this.driver.quit();
         }
     }
+    
     
     @RunWith(Parameterized.class)
     public static class TestRecapCheckout {
